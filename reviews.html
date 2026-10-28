@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews — Bean & Brew</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--espresso:#4a2c2a;--caramel:#c68b59;--cream:#fdf6ec;--mocha:#2b1d16;--soft:#f3e4d4}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--cream);color:var(--mocha);line-height:1.6}
+  nav{background:var(--espresso);padding:15px;text-align:center;position:sticky;top:0;z-index:100}
+  nav a{color:var(--cream);text-decoration:none;margin:0 10px;font-weight:600;font-size:15px;padding:6px 4px;border-bottom:2px solid transparent;transition:.3s}
+  nav a:hover,nav a.active{color:var(--caramel);border-bottom:2px solid var(--caramel)}
+  header{background:linear-gradient(135deg,var(--espresso),#6b4038);color:#fff;text-align:center;padding:60px 20px}
+  header h1{font-size:2.2em;letter-spacing:2px}
+  header p{color:var(--caramel);font-style:italic;margin-top:8px}
+  main{max-width:900px;margin:40px auto;padding:0 20px}
+  .review{background:#fff;border-radius:12px;padding:22px;margin:20px 0;box-shadow:0 4px 16px rgba(74,44,42,.1);border-left:5px solid var(--caramel)}
+  .stars{color:var(--caramel);font-size:1.3em}
+  .reviewer{font-weight:700;color:var(--espresso);margin-top:10px}
+  .form-card{background:#fff;border-radius:12px;padding:25px;box-shadow:0 4px 16px rgba(74,44,42,.1);margin:30px 0;border-top:4px solid var(--espresso)}
+  form label{display:block;font-weight:600;margin:12px 0 4px;color:var(--espresso)}
+  form input,form select,form textarea{width:100%;padding:10px;border:1px solid #d8c4b0;border-radius:8px;font-family:inherit;font-size:15px}
+  form input:focus,form select:focus,form textarea:focus{outline:none;border-color:var(--caramel);box-shadow:0 0 0 3px rgba(198,139,89,.25)}
+  form button{background:var(--caramel);color:var(--espresso);border:none;padding:12px 30px;border-radius:30px;font-weight:700;cursor:pointer;margin-top:15px;transition:.3s}
+  form button:hover{background:var(--espresso);color:var(--cream)}
+  .msg{margin-top:15px;padding:12px;border-radius:8px;font-weight:600;display:none}
+  .msg.success{background:#e6d3c0;color:var(--espresso);display:block}
+  .msg.error{background:#f0d0d0;color:#7a2020;display:block}
+  footer{background:var(--espresso);color:var(--cream);text-align:center;padding:20px;margin-top:40px;font-size:14px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="welcome.html">Welcome</a>
+  <a href="about.html">About</a>
+  <a href="menu.html">Menu</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="events.html">Events</a>
+  <a href="reviews.html" class="active">Reviews</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<header>
+  <h1>CUSTOMER REVIEWS</h1>
+  <p>What our guests say</p>
+</header>
+<main>
+  <div class="review">
+    <p class="stars">★★★★★</p>
+    <p>"Best cappuccino in Kampala! The staff are so friendly and the space is beautifully cozy."</p>
+    <p class="reviewer">— Amina K.</p>
+  </div>
+  <div class="review">
+    <p class="stars">★★★★★</p>
+    <p>"I come here every morning before work. The bread is always fresh and the coffee never disappoints."</p>
+    <p class="reviewer">— Brian O.</p>
+  </div>
+  <div class="review">
+    <p class="stars">★★★★☆</p>
+    <p>"Lovely place for meetings. Wi-Fi is fast, and the chocolate cake is a must-try!"</p>
+    <p class="reviewer">— Sandra M.</p>
+  </div>
+
+  <div class="form-card">
+    <h2 style="color:var(--espresso);margin-bottom:10px">Leave a Review</h2>
+    <form id="reviewForm" novalidate>
+      <label for="rname">Your Name</label>
+      <input type="text" id="rname" placeholder="e.g. John Doe" required>
+      <label for="rating">Rating</label>
+      <select id="rating" required>
+        <option value="">Select…</option>
+        <option value="5">★★★★★ (5)</option>
+        <option value="4">★★★★☆ (4)</option>
+        <option value="3">★★★☆☆ (3)</option>
+        <option value="2">★★☆☆☆ (2)</option>
+        <option value="1">★☆☆☆☆ (1)</option>
+      </select>
+      <label for="rtext">Your Review</label>
+      <textarea id="rtext" rows="4" placeholder="Tell us about your experience..." required></textarea>
+      <button type="submit">Submit Review</button>
+      <div id="reviewMsg" class="msg"></div>
+    </form>
+  </div>
+</main>
+<footer>
+  <p>Bean &amp; Brew Coffee Shop · Kampala, Uganda · 0703899625 · beanandbrew@gmail.com</p>
+  <p>Open daily: 08:00 AM – 08:00 PM</p>
+</footer>
+
+<script>
+  document.getElementById('reviewForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    const n=document.getElementById('rname').value.trim();
+    const r=document.getElementById('rating').value;
+    const t=document.getElementById('rtext').value.trim();
+    const m=document.getElementById('reviewMsg');
+    m.className='msg';
+    if(n.length<2){m.textContent="Please enter your name (at least 2 characters).";m.classList.add('error');return;}
+    if(!r){m.textContent="Please select a rating.";m.classList.add('error');return;}
+    if(t.length<5){m.textContent="Please write a longer review (at least 5 characters).";m.classList.add('error');return;}
+    m.textContent=`Thank you, ${n}! Your ${r}-star review has been submitted.`;
+    m.classList.add('success');
+    this.reset();
+  });
+</script>
+</body>
+</html>

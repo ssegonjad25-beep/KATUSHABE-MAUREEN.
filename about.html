@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Bean & Brew</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--espresso:#4a2c2a;--caramel:#c68b59;--cream:#fdf6ec;--mocha:#2b1d16;--soft:#f3e4d4}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--cream);color:var(--mocha);line-height:1.6}
+  nav{background:var(--espresso);padding:15px;text-align:center;position:sticky;top:0;z-index:100}
+  nav a{color:var(--cream);text-decoration:none;margin:0 10px;font-weight:600;font-size:15px;padding:6px 4px;border-bottom:2px solid transparent;transition:.3s}
+  nav a:hover,nav a.active{color:var(--caramel);border-bottom:2px solid var(--caramel)}
+  header{background:linear-gradient(135deg,var(--espresso),#6b4038);color:#fff;text-align:center;padding:60px 20px}
+  header h1{font-size:2.2em;letter-spacing:2px}
+  header p{color:var(--caramel);font-style:italic;margin-top:8px}
+  main{max-width:900px;margin:40px auto;padding:0 20px}
+  h2{color:var(--espresso);margin:25px 0 10px;border-bottom:2px solid var(--caramel);padding-bottom:5px}
+  .card{background:#fff;border-left:5px solid var(--caramel);padding:20px;border-radius:12px;margin:20px 0;box-shadow:0 4px 16px rgba(74,44,42,.1)}
+  main img{width:100%;max-width:600px;border-radius:14px;display:block;margin:20px auto;box-shadow:0 8px 24px rgba(74,44,42,.2);cursor:pointer;transition:transform .4s}
+  main img:hover{transform:scale(1.03)}
+  .facts{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;margin:25px 0}
+  .fact{background:var(--espresso);color:#fff;padding:18px 28px;border-radius:12px;text-align:center;min-width:150px;transition:transform .3s}
+  .fact:hover{transform:scale(1.05)}
+  .fact strong{display:block;font-size:1.8em;color:var(--caramel)}
+  footer{background:var(--espresso);color:var(--cream);text-align:center;padding:20px;margin-top:40px;font-size:14px}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);justify-content:center;align-items:center;z-index:999}
+  #lightbox img{max-width:92%;max-height:88%;border-radius:12px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="welcome.html">Welcome</a>
+  <a href="about.html" class="active">About</a>
+  <a href="menu.html">Menu</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="events.html">Events</a>
+  <a href="reviews.html">Reviews</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<header>
+  <h1>ABOUT BEAN &amp; BREW</h1>
+  <p>Learn more about who we are</p>
+</header>
+<main>
+  <div class="card">
+    <p>Bean &amp; Brew Coffee Shop was created to provide a comfortable place where people can enjoy quality coffee and delicious food.</p>
+  </div>
+  <img src="https://picsum.photos/id/1074/800/500" alt="Our team" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/1012/800/500'">
+  <h2>Our Story</h2>
+  <p>We believe that coffee is more than just a drink — it brings people together, creates conversations, and makes ordinary moments special.</p>
+  <div class="facts">
+    <div class="fact"><strong data-count="5">0</strong>Years brewing</div>
+    <div class="fact"><strong data-count="20">0</strong>Drinks &amp; snacks</div>
+    <div class="fact"><strong data-count="100">0</strong>% Fresh beans</div>
+  </div>
+  <h2>Our Mission</h2>
+  <p>To provide high-quality coffee, friendly customer service, and a comfortable environment for everyone.</p>
+  <img src="https://picsum.photos/id/425/800/500" alt="Our interior" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/431/800/500'">
+  <h2>Our Vision</h2>
+  <p>To become a trusted and loved coffee shop in Uganda.</p>
+</main>
+<footer>
+  <p>Bean &amp; Brew Coffee Shop · Kampala, Uganda · 0703899625 · beanandbrew@gmail.com</p>
+  <p>Open daily: 08:00 AM – 08:00 PM</p>
+</footer>
+<div id="lightbox" onclick="this.style.display='none'"><img id="lbImg" src="" alt="Enlarged"></div>
+
+<script>
+  document.querySelectorAll('.fact strong').forEach(el=>{
+    const t=+el.dataset.count;let c=0;const s=Math.max(1,Math.floor(t/40));
+    const timer=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(timer);}el.textContent=c+(t===100?'':'+');},30);
+  });
+  function openLightbox(src){document.getElementById('lbImg').src=src;document.getElementById('lightbox').style.display='flex';}
+  document.querySelectorAll('img').forEach(img=>{
+    img.onerror=function(){this.onerror=null;this.src='https://picsum.photos/id/225/400/300';};
+  });
+</script>
+</body>
+</html>

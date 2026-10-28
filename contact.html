@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Bean & Brew</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--espresso:#4a2c2a;--caramel:#c68b59;--cream:#fdf6ec;--mocha:#2b1d16;--soft:#f3e4d4}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--cream);color:var(--mocha);line-height:1.6}
+  nav{background:var(--espresso);padding:15px;text-align:center;position:sticky;top:0;z-index:100}
+  nav a{color:var(--cream);text-decoration:none;margin:0 10px;font-weight:600;font-size:15px;padding:6px 4px;border-bottom:2px solid transparent;transition:.3s}
+  nav a:hover,nav a.active{color:var(--caramel);border-bottom:2px solid var(--caramel)}
+  header{background:linear-gradient(135deg,var(--espresso),#6b4038);color:#fff;text-align:center;padding:60px 20px}
+  header h1{font-size:2.2em;letter-spacing:2px}
+  header p{color:var(--caramel);font-style:italic;margin-top:8px}
+  main{max-width:900px;margin:40px auto;padding:0 20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:25px 0}
+  .card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 4px 16px rgba(74,44,42,.1);border-top:4px solid var(--caramel)}
+  .card h2{color:var(--espresso);margin-bottom:10px;font-size:1.2em}
+  .card a{color:var(--espresso);font-weight:600}
+  .form-card{background:#fff;border-radius:12px;padding:25px;box-shadow:0 4px 16px rgba(74,44,42,.1);margin:25px 0;border-top:4px solid var(--espresso)}
+  form label{display:block;font-weight:600;margin:12px 0 4px;color:var(--espresso)}
+  form input,form textarea{width:100%;padding:10px;border:1px solid #d8c4b0;border-radius:8px;font-family:inherit;font-size:15px}
+  form input:focus,form textarea:focus{outline:none;border-color:var(--caramel);box-shadow:0 0 0 3px rgba(198,139,89,.25)}
+  form button{background:var(--caramel);color:var(--espresso);border:none;padding:12px 30px;border-radius:30px;font-weight:700;cursor:pointer;margin-top:15px;transition:.3s}
+  form button:hover{background:var(--espresso);color:var(--cream)}
+  .msg{margin-top:15px;padding:12px;border-radius:8px;font-weight:600;display:none}
+  .msg.success{background:#e6d3c0;color:var(--espresso);display:block}
+  .msg.error{background:#f0d0d0;color:#7a2020;display:block}
+  .map-img{width:100%;border-radius:12px;margin:20px 0;box-shadow:0 6px 18px rgba(74,44,42,.2);cursor:pointer}
+  footer{background:var(--espresso);color:var(--cream);text-align:center;padding:20px;margin-top:40px;font-size:14px}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);justify-content:center;align-items:center;z-index:999}
+  #lightbox img{max-width:92%;max-height:88%;border-radius:12px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="welcome.html">Welcome</a>
+  <a href="about.html">About</a>
+  <a href="menu.html">Menu</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="events.html">Events</a>
+  <a href="reviews.html">Reviews</a>
+  <a href="contact.html" class="active">Contact</a>
+</nav>
+<header>
+  <h1>CONTACT US</h1>
+  <p>We would love to hear from you</p>
+</header>
+<main>
+  <div class="grid">
+    <div class="card"><h2>📍 Location</h2><p>Kampala, Uganda</p></div>
+    <div class="card"><h2>📞 Telephone</h2><p><a href="tel:0703899625">0703899625</a></p></div>
+    <div class="card"><h2>✉️ Email</h2><p><a href="mailto:beanandbrew@gmail.com">beanandbrew@gmail.com</a></p></div>
+    <div class="card"><h2>🕒 Opening Hours</h2><p>Monday – Sunday</p><p>08:00 AM – 08:00 PM</p></div>
+  </div>
+
+  <img src="https://picsum.photos/id/1074/800/400" alt="Our location" class="map-img" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/425/800/400'">
+
+  <div class="form-card">
+    <h2 style="color:var(--espresso);margin-bottom:10px">Send Us a Message</h2>
+    <p>Have a question? Get in touch with us.</p>
+    <form id="contactForm" novalidate>
+      <label for="cname">Your Name</label>
+      <input type="text" id="cname" placeholder="e.g. Amina Nakato" required>
+      <label for="cemail">Email Address</label>
+      <input type="email" id="cemail" placeholder="you@example.com" required>
+      <label for="cmsg">Message</label>
+      <textarea id="cmsg" rows="4" placeholder="How can we help you?" required></textarea>
+      <button type="submit">Send Message</button>
+      <div id="contactMsg" class="msg"></div>
+    </form>
+  </div>
+</main>
+<footer>
+  <p>Bean &amp; Brew Coffee Shop · Kampala, Uganda · 0703899625 · beanandbrew@gmail.com</p>
+  <p>Open daily: 08:00 AM – 08:00 PM</p>
+</footer>
+<div id="lightbox" onclick="this.style.display='none'"><img id="lbImg" src="" alt="Enlarged"></div>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    const n=document.getElementById('cname').value.trim();
+    const em=document.getElementById('cemail').value.trim();
+    const m=document.getElementById('cmsg').value.trim();
+    const box=document.getElementById('contactMsg');
+    box.className='msg';
+    if(n.length<2){box.textContent="Please enter your name (at least 2 characters).";box.classList.add('error');return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){box.textContent="Please enter a valid email address.";box.classList.add('error');return;}
+    if(m.length<5){box.textContent="Please write a longer message (at least 5 characters).";box.classList.add('error');return;}
+    box.textContent=`Thank you, ${n}! Your message has been received. We'll reply to ${em} soon.`;
+    box.classList.add('success');
+    this.reset();
+  });
+  function openLightbox(src){document.getElementById('lbImg').src=src;document.getElementById('lightbox').style.display='flex';}
+  document.querySelectorAll('img').forEach(img=>{
+    img.onerror=function(){this.onerror=null;this.src='https://picsum.photos/id/225/400/300';};
+  });
+</script>
+</body>
+</html>

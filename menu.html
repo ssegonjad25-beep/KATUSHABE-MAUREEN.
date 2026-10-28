@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Bean & Brew</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--espresso:#4a2c2a;--caramel:#c68b59;--cream:#fdf6ec;--mocha:#2b1d16;--soft:#f3e4d4}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--cream);color:var(--mocha);line-height:1.6}
+  nav{background:var(--espresso);padding:15px;text-align:center;position:sticky;top:0;z-index:100}
+  nav a{color:var(--cream);text-decoration:none;margin:0 10px;font-weight:600;font-size:15px;padding:6px 4px;border-bottom:2px solid transparent;transition:.3s}
+  nav a:hover,nav a.active{color:var(--caramel);border-bottom:2px solid var(--caramel)}
+  header{background:linear-gradient(135deg,var(--espresso),#6b4038);color:#fff;text-align:center;padding:60px 20px}
+  header h1{font-size:2.2em;letter-spacing:2px}
+  header p{color:var(--caramel);font-style:italic;margin-top:8px}
+  main{max-width:900px;margin:40px auto;padding:0 20px}
+  .search{width:100%;padding:14px 20px;border:2px solid var(--caramel);border-radius:40px;font-size:1em;margin-bottom:25px;transition:.3s;background:#fff}
+  .search:focus{outline:none;border-color:var(--espresso);box-shadow:0 0 0 4px rgba(198,139,89,.25)}
+  .dish{background:#fff;border-radius:14px;padding:20px;margin:20px 0;box-shadow:0 4px 16px rgba(74,44,42,.1);border-left:5px solid var(--caramel);display:flex;align-items:center;gap:20px;flex-wrap:wrap;transition:transform .4s,box-shadow .4s}
+  .dish:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(74,44,42,.2)}
+  .dish img{width:150px;height:150px;object-fit:cover;border-radius:12px;cursor:pointer;transition:transform .4s}
+  .dish:hover img{transform:scale(1.05)}
+  .dish-info{flex:1;min-width:200px}
+  .dish-info h3{color:var(--espresso);margin-bottom:6px}
+  .price{color:var(--caramel);font-weight:700;font-size:1.15em;text-shadow:0 1px 0 rgba(0,0,0,.1)}
+  .order-btn{background:var(--espresso);color:var(--cream);border:none;padding:12px 24px;border-radius:40px;cursor:pointer;font-weight:700;transition:.3s}
+  .order-btn:hover{background:var(--caramel);color:var(--espresso);transform:scale(1.05)}
+  #msg{display:none;background:#e6d3c0;color:var(--espresso);padding:14px;border-radius:10px;margin:15px 0;font-weight:700;animation:fadeUp .4s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+  .no-result{text-align:center;color:var(--espresso);font-weight:700;padding:20px;display:none}
+  footer{background:var(--espresso);color:var(--cream);text-align:center;padding:20px;margin-top:40px;font-size:14px}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);justify-content:center;align-items:center;z-index:999}
+  #lightbox img{max-width:92%;max-height:88%;border-radius:12px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="welcome.html">Welcome</a>
+  <a href="about.html">About</a>
+  <a href="menu.html" class="active">Menu</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="events.html">Events</a>
+  <a href="reviews.html">Reviews</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<header>
+  <h1>OUR MENU</h1>
+  <p>Choose your favourite drink or snack</p>
+</header>
+<main>
+  <div id="msg"></div>
+  <input type="text" id="search" class="search" placeholder="🔍 Search menu (coffee, cake, bread...)..." onkeyup="filterDishes()">
+
+  <div class="dish" data-name="iced coffee drink cold">
+    <img src="https://picsum.photos/id/225/300/300" alt="Iced Coffee" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/431/300/300'">
+    <div class="dish-info">
+      <h3>Iced Coffee</h3>
+      <p>Cold and refreshing coffee, perfect for warm afternoons.</p>
+      <p class="price">UGX 10,000</p>
+    </div>
+    <button class="order-btn" onclick="addToOrder('Iced Coffee',10000)">Add to Order</button>
+  </div>
+
+  <div class="dish" data-name="chocolate cake dessert sweet">
+    <img src="https://picsum.photos/id/1080/300/300" alt="Chocolate Cake" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/292/300/300'">
+    <div class="dish-info">
+      <h3>Chocolate Cake</h3>
+      <p>Soft and delicious chocolate cake, baked fresh daily.</p>
+      <p class="price">UGX 7,000</p>
+    </div>
+    <button class="order-btn" onclick="addToOrder('Chocolate Cake',7000)">Add to Order</button>
+  </div>
+
+  <div class="dish" data-name="fresh bread pastry bakery">
+    <img src="https://picsum.photos/id/292/300/300" alt="Fresh Bread" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/312/300/300'">
+    <div class="dish-info">
+      <h3>Fresh Bread</h3>
+      <p>Freshly baked bread and pastries from our oven.</p>
+      <p class="price">UGX 5,000</p>
+    </div>
+    <button class="order-btn" onclick="addToOrder('Fresh Bread',5000)">Add to Order</button>
+  </div>
+
+  <div class="dish" data-name="cappuccino coffee hot espresso">
+    <img src="https://picsum.photos/id/30/300/300" alt="Cappuccino" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/225/300/300'">
+    <div class="dish-info">
+      <h3>Cappuccino</h3>
+      <p>Classic espresso with steamed milk and a soft foam top.</p>
+      <p class="price">UGX 8,000</p>
+    </div>
+    <button class="order-btn" onclick="addToOrder('Cappuccino',8000)">Add to Order</button>
+  </div>
+
+  <div class="dish" data-name="croissant pastry butter snack">
+    <img src="https://picsum.photos/id/312/300/300" alt="Croissant" onclick="openLightbox(this.src)" onerror="this.onerror=null;this.src='https://picsum.photos/id/292/300/300'">
+    <div class="dish-info">
+      <h3>Butter Croissant</h3>
+      <p>Flaky, buttery, and baked to golden perfection.</p>
+      <p class="price">UGX 6,000</p>
+    </div>
+    <button class="order-btn" onclick="addToOrder('Butter Croissant',6000)">Add to Order</button>
+  </div>
+
+  <p class="no-result" id="noResult">No items match your search.</p>
+</main>
+<footer>
+  <p>Bean &amp; Brew Coffee Shop · Kampala, Uganda · 0703899625 · beanandbrew@gmail.com</p>
+  <p>Open daily: 08:00 AM – 08:00 PM</p>
+</footer>
+<div id="lightbox" onclick="this.style.display='none'"><img id="lbImg" src="" alt="Enlarged"></div>
+
+<script>
+  let order=[],total=0;
+  function addToOrder(name,price){
+    order.push(name);total+=price;
+    const m=document.getElementById('msg');
+    m.textContent=`✅ ${name} added. Items: ${order.length} | Total: UGX ${total.toLocaleString()}`;
+    m.style.display='block';
+    setTimeout(()=>m.style.display='none',4000);
+  }
+  function filterDishes(){
+    const q=document.getElementById('search').value.toLowerCase();
+    let v=0;
+    document.querySelectorAll('.dish').forEach(d=>{
+      const match=d.dataset.name.includes(q)||d.querySelector('h3').textContent.toLowerCase().includes(q);
+      d.style.display=match?'flex':'none';
+      if(match)v++;
+    });
+    document.getElementById('noResult').style.display=v===0?'block':'none';
+  }
+  function openLightbox(src){document.getElementById('lbImg').src=src;document.getElementById('lightbox').style.display='flex';}
+  document.querySelectorAll('img').forEach(img=>{
+    img.onerror=function(){this.onerror=null;this.src='https://picsum.photos/id/225/300/300';};
+  });
+</script>
+</body>
+</html>
